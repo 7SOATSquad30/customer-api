@@ -31,7 +31,7 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 8080
-            initialDelaySeconds: 40
+            initialDelaySeconds: 180
             periodSeconds: 30
             timeoutSeconds: 10
             failureThreshold: 2
@@ -39,15 +39,15 @@ spec:
             httpGet:
               path: /swagger-ui/index.html
               port: 8080
-            initialDelaySeconds: 50
+            initialDelaySeconds: 240
             periodSeconds: 30
             timeoutSeconds: 10
             failureThreshold: 2
           resources:
             requests:
-              cpu: "20m"
-              memory: "500Mi"
+              cpu: "10m"
+              memory: "150Mi"
             limits:
-              cpu: "500m"
-              memory: "3Gi"
+              cpu: "150m"
+              memory: "300Mi"
       restartPolicy: Always
