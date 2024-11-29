@@ -9,9 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CustomerApiApplicationTests {
 
     @Test
-    void contextLoads() {
-        int x = 1;
-        int y = 1;
-        assertTrue(x == y, "assertion failed");
+    void applicationStarts() {
+        // Verifica se a aplicação inicia sem erros
+        CustomerApiApplication.main(new String[] {});
     }
+    
 }
