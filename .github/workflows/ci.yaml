@@ -1,14 +1,91 @@
 name: CI
 
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x ./gradlew
+
+      - name: Install xmllint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
+
+      - name: Run Spotless Apply
+        run: ./gradlew spotlessApply
+
+      - name: Run Spotless Check
+        run: ./gradlew spotlessCheck
+
+      - name: Run tests and generate JaCoCo report
+        run: |
+          ./gradlew clean test jacocoTestReport
+          echo "Generated JaCoCo reports:"
+          ls -R build/reports/jacoco || echo "No JaCoCo reports found."
+
+      - name: Extract and display coverage percentage
+        run: |
+          # Find the JaCoCo XML report
+          REPORT_PATH=build/reports/jacoco/test/jacocoTestReport.xml
+          if [ ! -f "$REPORT_PATH" ]; then
+            echo "JaCoCo coverage report not found!"
+            exit 1
+          fi
+
+          echo "Found JaCoCo XML report at: $REPORT_PATH"
+
+          # Display the content of the XML report
+          echo "Content of $REPORT_PATH:"
+          cat "$REPORT_PATH"
+
+          # Extract coverage percentage using xmllint
+          COVERED=$(xmllint --xpath 'string(//counter[@type="LINE"]/@covered)' "$REPORT_PATH")
+          MISSED=$(xmllint --xpath 'string(//counter[@type="LINE"]/@missed)' "$REPORT_PATH")
+
+          if [ -z "$COVERED" ] || [ -z "$MISSED" ]; then
+            echo "No coverage data found in the report."
+            exit 1
+          fi
+
+          # Calculate the percentage
+          TOTAL=$((COVERED + MISSED))
+          PERCENTAGE=$(echo "scale=2; ($COVERED / $TOTAL) * 100" | bc)
+
+          echo "Coverage: $PERCENTAGE%"
+          
+          # Validate coverage percentage
+          MINIMUM=50.0
+          if (( $(echo "$PERCENTAGE < $MINIMUM" | bc -l) )); then
+            echo "Coverage is below the minimum required: $MINIMUM%!"
+            exit 1
+          fi
+          echo "Coverage validation passed with $PERCENTAGE%."
+
+      - name: Upload JaCoCo HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-html-report
+          path: build/reports/jacoco/test/html
+
   build:
     runs-on: ubuntu-latest
     
@@ -22,16 +99,30 @@ jobs:
           java-version: 21
           distribution: 'zulu'
 
+      - name: Setup Docker Compose
+        run: |
+          curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('build.gradle', 'gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Raise infra
+        run: make infrastructure/up
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
+
+      - name: Run Spotless Apply
+        run: ./gradlew spotlessApply
+  
       - name: Code linting
         run: ./gradlew spotlessCheck
 
