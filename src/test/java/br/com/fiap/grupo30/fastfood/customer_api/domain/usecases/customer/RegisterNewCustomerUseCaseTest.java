@@ -1,24 +1,26 @@
 package br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Category;
 import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Customer;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
 import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.gateways.CustomerGateway;
 import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.CustomerDTO;
-import br.com.fiap.grupo30.fastfood.customer_api.utils.CustomerHelper;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.InvalidCpfException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 class RegisterNewCustomerUseCaseTest {
 
-    @Mock private CustomerGateway customerGateway;
+    @InjectMocks
+    private RegisterNewCustomerUseCase registerNewCustomerUseCase;
 
-    @InjectMocks private RegisterNewCustomerUseCase registerNewCustomerUseCase;
+    @Mock
+    private CustomerGateway customerGateway;
 
     @BeforeEach
     void setUp() {
@@ -26,29 +28,39 @@ class RegisterNewCustomerUseCaseTest {
     }
 
     @Test
-    void shouldThrowInvalidCpfExceptionWhenCpfIsInvalid() {
-        String invalidCpf = "12345678900";
+    void testExecute_SuccessfulRegistration() {
+        // Dados simulados
         String name = "John Doe";
-        String email = "john.doe@example.com";
+        String cpf = "12345678900";
+        String email = "johndoe@example.com";
 
-        assertThrows(InvalidCpfException.class, () -> {
-            registerNewCustomerUseCase.execute(customerGateway, name, invalidCpf, email);
-        });
+        Customer mockCustomer = new Customer(1L, name, new CPF(cpf), email);
+        CustomerDTO expectedDTO = new CustomerDTO(name, cpf, email);
+
+        // Configuração do comportamento do mock
+        when(customerGateway.save(any(Customer.class))).thenReturn(mockCustomer);
+
+        // Execução do método
+        CustomerDTO result = registerNewCustomerUseCase.execute(customerGateway, name, cpf, email);
+
+        // Verificações
+        assertNotNull(result);
+        assertEquals(expectedDTO.getName(), result.getName());
+        assertEquals(expectedDTO.getCpf(), result.getCpf());
+        assertEquals(expectedDTO.getEmail(), result.getEmail());
+        verify(customerGateway, times(1)).save(any(Customer.class));
     }
 
     @Test
-    void shouldReturnCustomerDTOWhenCpfIsValid() {
-        String validCpf = "123.456.789-09";
-        String name = "John Doe";
-        String email = "john.doe@example.com";
-        Customer customer = Customer.create(name, validCpf, email);
-        CustomerDTO expectedCustomerDTO = customer.toDTO();
+    void testExecute_InvalidCpf() {
+        String invalidCpf = "123";
 
-        when(customerGateway.save(any(Customer.class))).thenReturn(customer);
+        // Verifica se a exceção é lançada ao usar CPF inválido
+        assertThrows(InvalidCpfException.class, () -> {
+            registerNewCustomerUseCase.execute(customerGateway, "John Doe", invalidCpf, "johndoe@example.com");
+        });
 
-        CustomerDTO actualCustomerDTO = registerNewCustomerUseCase.execute(customerGateway, name, validCpf, email);
-
-        assertEquals(expectedCustomerDTO, actualCustomerDTO);
-        verify(customerGateway, times(1)).save(any(Customer.class));
+        // Garante que o gateway não foi chamado
+        verifyNoInteractions(customerGateway);
     }
 }

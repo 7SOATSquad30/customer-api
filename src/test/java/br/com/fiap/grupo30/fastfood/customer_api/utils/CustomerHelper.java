@@ -5,7 +5,7 @@ import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Customer;
 
 public class CustomerHelper {
 
-    private static final String DEFAULT_CUSTOMER_ID = 1;
+    private static final Long DEFAULT_CUSTOMER_ID = 1;
     private static final String DEFAULT_NAME = "John";
     private static final String DEFAULT_CPF = "33942748096";
     private static final String DEFAULT_EMAIL = "john@doe.com";
