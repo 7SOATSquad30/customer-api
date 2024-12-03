@@ -42,6 +42,10 @@ class CustomerTest {
     @Test
     void testToPersistence() {
         CustomerEntity entity = customer.toPersistence();
+        entity.prePersist();
+        entity.preUpdate();
+        entity.preRemove();
+
         assertEquals(customer.getEmail(), entity.getEmail(), "should have same value");
     }
 
