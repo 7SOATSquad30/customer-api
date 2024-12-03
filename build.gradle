@@ -58,7 +58,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testImplementation 'junit:junit:4.13.2'
 }
 
 tasks.named('test') {
@@ -67,11 +66,6 @@ tasks.named('test') {
 
 jacoco {
     toolVersion = "0.8.10"
-}
-
-test {
-    useJUnitPlatform()
-    finalizedBy jacocoTestReport
 }
 
 tasks.jacocoTestReport {

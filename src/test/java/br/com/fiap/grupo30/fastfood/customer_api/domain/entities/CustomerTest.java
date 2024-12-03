@@ -17,11 +17,11 @@ class CustomerTest {
 
     @BeforeEach
     void setUp() {
-        customer = new Customer(1L, "John Doe 1", new CPF("77503989025"), "johndoe1@example.com");
+        customer = new Customer(1L, "John Doe 1", new CPF("81704243050"), "johndoe1@example.com");
     }
 
     @Test
-    void testCreateCustomer() {
+    void test_shouldCreateCustomer() {
         Customer createdCustomer =
                 Customer.create("Jane Doe 2", "70671547070", "janedoe@example.com");
         assertEquals("janedoe3@example.com", createdCustomer.getEmail(), "should have same value");
@@ -30,18 +30,27 @@ class CustomerTest {
     @Test
     void testToDTO() {
         CustomerDTO dto = customer.toDTO();
-        assertEquals(customer.getEmail(), dto.getEmail(), "should have same value");
+
+        assertNotNull(dto);
+        assertEquals(customer.getName(), dto.getName());
+        assertEquals(customer.getCpf().value(), dto.getCpf());
+        assertEquals(customer.getEmail(), dto.getEmail());
     }
 
     @Test
     void testToPersistence() {
         CustomerEntity entity = customer.toPersistence();
-        assertEquals(customer.getEmail(), entity.getEmail(), "should have same value");
+
+        assertNotNull(entity);
+        assertEquals(customer.getId(), entity.getId());
+        assertEquals(customer.getName(), entity.getName());
+        assertEquals(customer.getCpf().value(), entity.getCpf());
+        assertEquals(customer.getEmail(), entity.getEmail());
     }
 
     @Test
     void testEquals_SameObject() {
-        assertEquals(customer, customer, "should have same value");
+        assertEquals(customer, customer, "should have same value", "Customers must match");
     }
 
     @Test
@@ -54,8 +63,8 @@ class CustomerTest {
     @Test
     void testEquals_DifferentCpf() {
         Customer differentCustomer =
-                new Customer(3L, "Jane Doe 4", new CPF("21999393082"), "janedoe4@example.com");
-        assertNotEquals(customer, differentCustomer, "should have same value");
+                new Customer(3L, "Jane Doe 4", new CPF("56107050027"), "janedoe4@example.com");
+        assertNotEquals(customer, differentCustomer, "should have same value", "Customers must match");
     }
 
     @Test
