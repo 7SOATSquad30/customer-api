@@ -51,27 +51,28 @@ class CustomerControllerTest {
         verify(findCustomerByCpfUseCase, times(1)).execute(any(CustomerGateway.class), eq(cpf));
     }
 
-//     @Test
-//     void testCreateCustomer() {
-//         // Configuração do mock
-//         CustomerDTO inputCustomer =
-//                 new CustomerDTO("Jane Doe", "77503989025", "janedoe@example.com");
-//         CustomerDTO createdCustomer =
-//                 new CustomerDTO("Jane Doe", "77503989025", "janedoe@example.com");
+    //     @Test
+    //     void testCreateCustomer() {
+    //         // Configuração do mock
+    //         CustomerDTO inputCustomer =
+    //                 new CustomerDTO("Jane Doe", "77503989025", "janedoe@example.com");
+    //         CustomerDTO createdCustomer =
+    //                 new CustomerDTO("Jane Doe", "77503989025", "janedoe@example.com");
 
-//         // Mock do método execute
-//         when(registerNewCustomerUseCase.execute(
-//                         any(CustomerGateway.class), anyString(), anyString(), anyString()))
-//                 .thenReturn(createdCustomer);
+    //         // Mock do método execute
+    //         when(registerNewCustomerUseCase.execute(
+    //                         any(CustomerGateway.class), anyString(), anyString(), anyString()))
+    //                 .thenReturn(createdCustomer);
 
-//         // Execução do método do controller
-//         ResponseEntity<CustomerDTO> response = customerController.createCustomer(inputCustomer);
+    //         // Execução do método do controller
+    //         ResponseEntity<CustomerDTO> response =
+    // customerController.createCustomer(inputCustomer);
 
-//         // Verificação
-//         assertEquals(201, response.getStatusCodeValue());
-//         assertEquals(createdCustomer, response.getBody());
+    //         // Verificação
+    //         assertEquals(201, response.getStatusCodeValue());
+    //         assertEquals(createdCustomer, response.getBody());
 
-//         verify(registerNewCustomerUseCase, times(1))
-//                 .execute(any(CustomerGateway.class), anyString(), anyString(), anyString());
-//     }
+    //         verify(registerNewCustomerUseCase, times(1))
+    //                 .execute(any(CustomerGateway.class), anyString(), anyString(), anyString());
+    //     }
 }

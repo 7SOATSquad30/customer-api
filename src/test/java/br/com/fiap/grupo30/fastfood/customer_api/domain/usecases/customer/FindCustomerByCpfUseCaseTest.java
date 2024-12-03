@@ -29,7 +29,8 @@ class FindCustomerByCpfUseCaseTest {
     void testExecute_ValidCpf() {
         // Dados simulados
         String validCpf = "77503989025";
-        Customer mockCustomer = new Customer(1L, "John Doe", new CPF(validCpf), "johndoe@example.com");
+        Customer mockCustomer =
+                new Customer(1L, "John Doe", new CPF(validCpf), "johndoe@example.com");
         CustomerDTO expectedDTO = new CustomerDTO("John Doe", validCpf, "johndoe@example.com");
 
         // Configuração do mock
@@ -59,5 +60,4 @@ class FindCustomerByCpfUseCaseTest {
 
         verifyNoInteractions(customerGateway);
     }
-    
 }

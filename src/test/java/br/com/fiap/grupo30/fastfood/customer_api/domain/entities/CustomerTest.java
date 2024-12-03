@@ -17,18 +17,18 @@ class CustomerTest {
 
     @BeforeEach
     void setUp() {
-        customer = new Customer(1L, "John Doe", new CPF("77503989025"), "johndoe@example.com");
+        customer = new Customer(1L, "John Doe", new CPF("81704243050"), "johndoe@example.com");
     }
 
     @Test
-    void testCreateCustomer() {
+    void test_shouldCreateCustomer() {
         Customer createdCustomer =
-                Customer.create("Jane Doe", "77503989025", "janedoe@example.com");
+                Customer.create("Jane Doe", "81704243050", "janedoe@example.com");
 
         assertNotNull(createdCustomer);
         assertNull(createdCustomer.getId());
         assertEquals("Jane Doe", createdCustomer.getName());
-        assertEquals("77503989025", createdCustomer.getCpf().value());
+        assertEquals("81704243050", createdCustomer.getCpf().value());
         assertEquals("janedoe@example.com", createdCustomer.getEmail());
     }
 
@@ -61,28 +61,28 @@ class CustomerTest {
     @Test
     void testEquals_DifferentObjectSameCpf() {
         Customer anotherCustomer =
-                new Customer(2L, "John Smith", new CPF("77503989025"), "johnsmith@example.com");
+                new Customer(2L, "John Smith", new CPF("81704243050"), "johnsmith@example.com");
         assertEquals(customer, anotherCustomer);
     }
 
     @Test
     void testEquals_DifferentCpf() {
         Customer differentCustomer =
-                new Customer(3L, "Jane Doe", new CPF("21999393082"), "janedoe@example.com");
+                new Customer(3L, "Jane Doe", new CPF("56107050027"), "janedoe@example.com");
         assertNotEquals(customer, differentCustomer);
     }
 
     @Test
     void testHashCode_SameCpf() {
         Customer anotherCustomer =
-                new Customer(2L, "John Smith", new CPF("77503989025"), "johnsmith@example.com");
+                new Customer(2L, "John Smith", new CPF("81704243050"), "johnsmith@example.com");
         assertEquals(customer.hashCode(), anotherCustomer.hashCode());
     }
 
     @Test
     void testHashCode_DifferentCpf() {
         Customer differentCustomer =
-                new Customer(3L, "Jane Doe", new CPF("21999393082"), "janedoe@example.com");
+                new Customer(3L, "Jane Doe", new CPF("56107050027"), "janedoe@example.com");
         assertNotEquals(customer.hashCode(), differentCustomer.hashCode());
     }
 }
