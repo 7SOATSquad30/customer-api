@@ -1,5 +1,8 @@
 package br.com.fiap.grupo30.fastfood.customer_api.utils;
 
+
+import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Customer;
+
 public class CustomerHelper {
 
     private static final String DEFAULT_CUSTOMER_ID = 1;

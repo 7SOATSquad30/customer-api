@@ -1,96 +1,80 @@
 package br.com.fiap.grupo30.fastfood.customer_api.domain.entities;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
 import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities.CustomerEntity;
 import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.CustomerDTO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerTest {
 
-    private static final String CUSTOMER_NAME = "John";
+    private Customer customer;
 
-    @Test
-    void shouldCreateCustomerWithNullId() {
-        // Act
-        Customer customer = Customer.create(CUSTOMER_NAME);
-
-        // Assert
-        assertThat(customer.getId()).isNull();
+    @BeforeEach
+    void setUp() {
+        customer = new Customer(1L, "John Doe", new CPF("12345678900"), "johndoe@example.com");
     }
 
     @Test
-    void shouldCreateCustomerWithCorrectName() {
-        // Act
-        Customer customer = Customer.create(CUSTOMER_NAME);
+    void testCreateCustomer() {
+        Customer createdCustomer = Customer.create("Jane Doe", "98765432100", "janedoe@example.com");
 
-        // Assert
-        assertThat(customer.getName()).isEqualTo(CUSTOMER_NAME);
+        assertNotNull(createdCustomer);
+        assertNull(createdCustomer.getId());
+        assertEquals("Jane Doe", createdCustomer.getName());
+        assertEquals("98765432100", createdCustomer.getCpf().value());
+        assertEquals("janedoe@example.com", createdCustomer.getEmail());
     }
 
     @Test
-    void shouldConvertToDTOWithCorrectName() {
-        // Arrange
-        Customer customer = new Customer(1L, CUSTOMER_NAME);
-
-        // Act
+    void testToDTO() {
         CustomerDTO dto = customer.toDTO();
 
-        // Assert
-        assertThat(dto.getName()).isEqualTo(customer.getName());
+        assertNotNull(dto);
+        assertEquals(customer.getName(), dto.getName());
+        assertEquals(customer.getCpf().value(), dto.getCpf());
+        assertEquals(customer.getEmail(), dto.getEmail());
     }
 
     @Test
-    void shouldConvertToPersistenceEntityWithCorrectId() {
-        // Arrange
-        Customer customer = new Customer(1L, CUSTOMER_NAME);
-
-        // Act
+    void testToPersistence() {
         CustomerEntity entity = customer.toPersistence();
 
-        // Assert
-        assertThat(entity.getId()).isEqualTo(customer.getId());
+        assertNotNull(entity);
+        assertEquals(customer.getId(), entity.getId());
+        assertEquals(customer.getName(), entity.getName());
+        assertEquals(customer.getCpf().value(), entity.getCpf());
+        assertEquals(customer.getEmail(), entity.getEmail());
     }
 
     @Test
-    void shouldConvertToPersistenceEntityWithCorrectName() {
-        // Arrange
-        Customer customer = new Customer(1L, CUSTOMER_NAME);
-
-        // Act
-        CustomerEntity entity = customer.toPersistence();
-
-        // Assert
-        assertThat(entity.getName()).isEqualTo(customer.getName());
+    void testEquals_SameObject() {
+        assertEquals(customer, customer);
     }
 
     @Test
-    void shouldBeEqualIfNamesAreSame() {
-        // Arrange
-        Customer customer1 = new Customer(1L, CUSTOMER_NAME);
-        Customer customer2 = new Customer(2L, CUSTOMER_NAME);
-
-        // Assert
-        assertThat(customer1).isEqualTo(customer2);
+    void testEquals_DifferentObjectSameCpf() {
+        Customer anotherCustomer = new Customer(2L, "John Smith", new CPF("12345678900"), "johnsmith@example.com");
+        assertEquals(customer, anotherCustomer);
     }
 
     @Test
-    void shouldHaveSameHashCodeIfNamesAreSame() {
-        // Arrange
-        Customer customer1 = new Customer(1L, CUSTOMER_NAME);
-        Customer customer2 = new Customer(2L, CUSTOMER_NAME);
-
-        // Assert
-        assertThat(customer1.hashCode()).hasSameHashCodeAs(customer2.hashCode());
+    void testEquals_DifferentCpf() {
+        Customer differentCustomer = new Customer(3L, "Jane Doe", new CPF("98765432100"), "janedoe@example.com");
+        assertNotEquals(customer, differentCustomer);
     }
 
     @Test
-    void shouldNotBeEqualIfNamesAreDifferent() {
-        // Arrange
-        Customer customer1 = new Customer(1L, CUSTOMER_NAME);
-        Customer customer2 = new Customer(2L, "Snacks");
+    void testHashCode_SameCpf() {
+        Customer anotherCustomer = new Customer(2L, "John Smith", new CPF("12345678900"), "johnsmith@example.com");
+        assertEquals(customer.hashCode(), anotherCustomer.hashCode());
+    }
 
-        // Assert
-        assertThat(customer1).isNotEqualTo(customer2);
+    @Test
+    void testHashCode_DifferentCpf() {
+        Customer differentCustomer = new Customer(3L, "Jane Doe", new CPF("98765432100"), "janedoe@example.com");
+        assertNotEquals(customer.hashCode(), differentCustomer.hashCode());
     }
 }
