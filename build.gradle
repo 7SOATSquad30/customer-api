@@ -53,11 +53,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
-<<<<<<< HEAD
     implementation 'org.flywaydb:flyway-database-postgresql'
-=======
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
->>>>>>> ca9974b (feat: add e2e spec)
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'com.h2database:h2'
