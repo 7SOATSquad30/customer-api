@@ -43,8 +43,8 @@ class CustomerGatewayTest {
 
         Customer result = customerGateway.findCustomerByCpf(cpf);
 
-        assertNotNull(result);
-        assertEquals(mockEntity.getCpf(), result.getCpf().value());
+        assertNotNull(result, "Must not be null");
+        assertEquals(mockEntity.getCpf(), result.getCpf().value(), "CPF must match");
         verify(jpaCustomerRepository, times(1)).findCustomerByCpf(cpf);
     }
 
@@ -53,7 +53,10 @@ class CustomerGatewayTest {
         String cpf = "77503989025";
         when(jpaCustomerRepository.findCustomerByCpf(anyString())).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> customerGateway.findCustomerByCpf(cpf));
+        assertThrows(
+                ResourceNotFoundException.class,
+                () -> customerGateway.findCustomerByCpf(cpf),
+                "Must throw ResourceNotFoundException");
         verify(jpaCustomerRepository, times(1)).findCustomerByCpf(cpf);
     }
 
@@ -68,8 +71,8 @@ class CustomerGatewayTest {
 
         Customer result = customerGateway.save(customer);
 
-        assertNotNull(result);
-        assertEquals(customer.getCpf().value(), result.getCpf().value());
+        assertNotNull(result, "Must not be null");
+        assertEquals(customer.getCpf().value(), result.getCpf().value(), "CPF must match");
         verify(jpaCustomerRepository, times(1)).save(any(CustomerEntity.class));
     }
 
@@ -80,7 +83,10 @@ class CustomerGatewayTest {
         when(jpaCustomerRepository.save(any(CustomerEntity.class)))
                 .thenThrow(new DataIntegrityViolationException("CPF already exists"));
 
-        assertThrows(ResourceConflictException.class, () -> customerGateway.save(customer));
+        assertThrows(
+                ResourceConflictException.class,
+                () -> customerGateway.save(customer),
+                "Must throw ResourceConflictException");
         verify(jpaCustomerRepository, times(1)).save(any(CustomerEntity.class));
     }
 }

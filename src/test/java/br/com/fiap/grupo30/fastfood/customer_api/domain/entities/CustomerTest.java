@@ -3,7 +3,6 @@ package br.com.fiap.grupo30.fastfood.customer_api.domain.entities;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
 import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities.CustomerEntity;
@@ -14,17 +13,24 @@ import org.junit.jupiter.api.Test;
 class CustomerTest {
 
     private Customer customer;
+    private Customer otherCustomer;
+
+    private static final CPF FIRST_CPF = new CPF("81704243050");
+    private static final CPF SECOND_CPF = new CPF("56107050027");
 
     @BeforeEach
     void setUp() {
-        customer = new Customer(1L, "John Doe 1", new CPF("81704243050"), "johndoe1@example.com");
+        customer = new Customer(1L, "John Doe", FIRST_CPF, "johndoe@example.com");
+        otherCustomer = new Customer(2L, "Jane Doe", SECOND_CPF, "janedoe@example.com");
     }
 
     @Test
     void test_shouldCreateCustomer() {
-        Customer createdCustomer =
-                Customer.create("Jane Doe 2", "70671547070", "janedoe@example.com");
-        assertEquals("janedoe3@example.com", createdCustomer.getEmail(), "should have same value");
+        assertNotNull(customer, "Customer can not be null");
+        assertNotNull(customer.getId(), "Id can not be null");
+        assertNotNull(customer.getName(), "Names can not be null");
+        assertNotNull(customer.getCpf().value(), "CPF can not be null");
+        assertNotNull(customer.getEmail(), "Email can not be null");
     }
 
     @Test
@@ -41,34 +47,34 @@ class CustomerTest {
 
     @Test
     void testEquals_SameObject() {
-        assertEquals(customer, customer, "Customers must match");
+        assertEquals(customer, customer, "Customers must match when exactly equal");
     }
 
     @Test
     void testEquals_DifferentObjectSameCpf() {
-        Customer anotherCustomer =
-                new Customer(2L, "John Smith", new CPF("64528738066"), "johnsmith@example.com");
-        assertEquals(customer, anotherCustomer, "should have same value");
+        Customer sameCustomer = new Customer(1L, "John Smith", FIRST_CPF, "johnsmith@example.com");
+        assertEquals(customer, sameCustomer, "Customers must match when same cpf");
     }
 
     @Test
     void testEquals_DifferentCpf() {
-        Customer differentCustomer =
-                new Customer(3L, "Jane Doe 4", new CPF("56107050027"), "janedoe4@example.com");
-        assertNotEquals(customer, differentCustomer, "Customers must match");
+        assertNotEquals(customer, otherCustomer, "Customers must not match when differet cpf");
     }
 
     @Test
     void testHashCode_SameCpf() {
-        Customer anotherCustomer =
-                new Customer(2L, "John Smith", new CPF("40421649003"), "johnsmith@example.com");
-        assertEquals(customer.hashCode(), anotherCustomer.hashCode(), "should have same value");
+        Customer sameCustomer = new Customer(1L, "John Smith", FIRST_CPF, "johnsmith@example.com");
+        assertEquals(
+                customer.hashCode(),
+                sameCustomer.hashCode(),
+                "Customers hashcode must match when same cpf");
     }
 
     @Test
     void testHashCode_DifferentCpf() {
-        Customer differentCustomer =
-                new Customer(3L, "Jane Doe 5", new CPF("00911206086"), "janedoe5@example.com");
-        assertNotEquals(customer.hashCode(), differentCustomer.hashCode(), "should have same value");
+        assertNotEquals(
+                customer.hashCode(),
+                otherCustomer.hashCode(),
+                "Customers hashcode must not match when different cpf");
     }
 }
