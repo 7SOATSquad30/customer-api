@@ -1,10 +1,10 @@
-package br.com.fiap.grupo30.fastfood.presentation.controllers;
+package br.com.fiap.grupo30.fastfood.customer_api.presentation.controllers;
 
-import br.com.fiap.grupo30.fastfood.domain.usecases.customer.FindCustomerByCpfUseCase;
-import br.com.fiap.grupo30.fastfood.domain.usecases.customer.RegisterNewCustomerUseCase;
-import br.com.fiap.grupo30.fastfood.infrastructure.gateways.CustomerGateway;
-import br.com.fiap.grupo30.fastfood.infrastructure.persistence.repositories.JpaCustomerRepository;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.dto.CustomerDTO;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer.FindCustomerByCpfUseCase;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer.RegisterNewCustomerUseCase;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.gateways.CustomerGateway;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.repositories.JpaCustomerRepository;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.CustomerDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

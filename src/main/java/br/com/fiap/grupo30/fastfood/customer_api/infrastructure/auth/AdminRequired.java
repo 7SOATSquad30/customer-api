@@ -1,4 +1,4 @@
-package br.com.fiap.grupo30.fastfood.infrastructure.auth;
+package br.com.fiap.grupo30.fastfood.customer_api.infrastructure.auth;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -42,97 +43,55 @@ jobs:
           echo "Generated JaCoCo reports:"
           ls -R build/reports/jacoco || echo "No JaCoCo reports found."
 
+      - name: Upload JaCoCo Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-coverage-report
+          path: build/reports/jacoco/test/html
+      
       - name: Extract and display coverage percentage
         run: |
-          # Find the JaCoCo XML report
+          # Caminho fixo do relatório XML
           REPORT_PATH=build/reports/jacoco/test/jacocoTestReport.xml
+      
           if [ ! -f "$REPORT_PATH" ]; then
-            echo "JaCoCo coverage report not found!"
+            echo "JaCoCo XML coverage report not found!"
             exit 1
           fi
-
+      
           echo "Found JaCoCo XML report at: $REPORT_PATH"
-
-          # Display the content of the XML report
-          echo "Content of $REPORT_PATH:"
-          cat "$REPORT_PATH"
-
-          # Extract coverage percentage using xmllint
-          COVERED=$(xmllint --xpath 'string(//counter[@type="LINE"]/@covered)' "$REPORT_PATH")
-          MISSED=$(xmllint --xpath 'string(//counter[@type="LINE"]/@missed)' "$REPORT_PATH")
-
+      
+          # Extração dos dados de cobertura
+          COVERED=$(xmllint --xpath 'string(sum(//counter[@type="LINE"]/@covered))' "$REPORT_PATH")
+          MISSED=$(xmllint --xpath 'string(sum(//counter[@type="LINE"]/@missed))' "$REPORT_PATH")
+      
           if [ -z "$COVERED" ] || [ -z "$MISSED" ]; then
-            echo "No coverage data found in the report."
+            echo "Error: Unable to extract coverage data from the XML report."
             exit 1
           fi
-
-          # Calculate the percentage
+      
+          # Converte valores para inteiros para evitar problemas de cálculo
+          COVERED=$(printf "%.0f" "$COVERED")
+          MISSED=$(printf "%.0f" "$MISSED")
           TOTAL=$((COVERED + MISSED))
+      
+          if [ "$TOTAL" -eq 0 ]; then
+            echo "Error: Total lines is zero, coverage cannot be calculated."
+            exit 1
+          fi
+      
+          # Cálculo do percentual de cobertura
           PERCENTAGE=$(echo "scale=2; ($COVERED / $TOTAL) * 100" | bc)
-
-          echo "Coverage: $PERCENTAGE%"
-          
-          # Validate coverage percentage
-          MINIMUM=50.0
+      
+          echo "Lines Covered: $COVERED"
+          echo "Lines Missed: $MISSED"
+          echo "Total Lines: $TOTAL"
+          echo "Coverage Percentage: $PERCENTAGE%"
+      
+          # Validação da cobertura mínima (80%)
+          MINIMUM=80.0
           if (( $(echo "$PERCENTAGE < $MINIMUM" | bc -l) )); then
             echo "Coverage is below the minimum required: $MINIMUM%!"
             exit 1
           fi
           echo "Coverage validation passed with $PERCENTAGE%."
-
-      - name: Upload JaCoCo HTML Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: jacoco-html-report
-          path: build/reports/jacoco/test/html
-
-  build:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      
-      - name: Setup JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: 21
-          distribution: 'zulu'
-
-      - name: Setup Docker Compose
-        run: |
-          curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          chmod +x /usr/local/bin/docker-compose
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('build.gradle', 'gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Raise infra
-        run: make infrastructure/up
-
-      - name: Grant execute permission for Gradlew
-        run: chmod +x gradlew
-
-      - name: Run Spotless Apply
-        run: ./gradlew spotlessApply
-  
-      - name: Code linting
-        run: ./gradlew spotlessCheck
-
-      - name: Static analysis
-        run: |
-          ./gradlew pmdMain
-          ./gradlew pmdTest
-
-      - name: Run tests
-        run: ./gradlew test
-
-      - name: Build
-        run: ./gradlew clean assemble
