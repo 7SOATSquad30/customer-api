@@ -4,8 +4,6 @@ import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Customer;
 import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
 import jakarta.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,9 +28,6 @@ public class CustomerEntity {
 
     @Column(nullable = false)
     private String email;
-
-    @OneToMany(mappedBy = "customer")
-    private List<OrderEntity> orders = new ArrayList<>();
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE", updatable = false)
     private Instant createdAt;

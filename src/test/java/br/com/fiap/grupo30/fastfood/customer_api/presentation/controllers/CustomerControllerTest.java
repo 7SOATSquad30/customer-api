@@ -48,32 +48,47 @@ class CustomerControllerTest {
         // Verificação
         // assertEquals(200, response.getStatusCodeValue(), "Must be status OK");
         assertEquals(mockCustomer, response.getBody(), "Must be expected response");
-
-        // verify(findCustomerByCpfUseCase, times(1)).execute(any(CustomerGateway.class), eq(cpf));
     }
 
-    //     @Test
-    //     void testCreateCustomer() {
-    //         // Configuração do mock
-    //         CustomerDTO inputCustomer =
-    //                 new CustomerDTO("Jane Doe", "77503989025", "janedoe@example.com");
-    //         CustomerDTO createdCustomer =
-    //                 new CustomerDTO("Jane Doe", "77503989025", "janedoe@example.com");
+    @Test
+    void testFindCustomerByCpf_Success() {
+        // Configuração do mock
+        String cpf = "77503989025";
+        CustomerDTO mockCustomer = new CustomerDTO("John Doe 2", cpf, "johndoe2@example.com");
 
-    //         // Mock do método execute
-    //         when(registerNewCustomerUseCase.execute(
-    //                         any(CustomerGateway.class), anyString(), anyString(), anyString()))
-    //                 .thenReturn(createdCustomer);
+        when(findCustomerByCpfUseCase.execute(any(CustomerGateway.class), eq(cpf)))
+                .thenReturn(mockCustomer);
 
-    //         // Execução do método do controller
-    //         ResponseEntity<CustomerDTO> response =
-    // customerController.createCustomer(inputCustomer);
+        // Execução do método do controller
+        ResponseEntity<CustomerDTO> response = customerController.findCustomerByCpf(cpf);
 
-    //         // Verificação
-    //         assertEquals(201, response.getStatusCodeValue());
-    //         assertEquals(createdCustomer, response.getBody());
+        // Verificação
+        assertEquals(mockCustomer, response.getBody(), "Expected customer data");
+    }
 
-    //         verify(registerNewCustomerUseCase, times(1))
-    //                 .execute(any(CustomerGateway.class), anyString(), anyString(), anyString());
-    //     }
+    @Test
+    void testCreateCustomer_Failure() {
+        // Dados de entrada válidos
+        CustomerDTO inputCustomer =
+                new CustomerDTO("Jane Doe 4", "47796327064", "janedoe4@example.com");
+
+        // Simulando falha no método execute
+        when(registerNewCustomerUseCase.execute(
+                        any(CustomerGateway.class),
+                        eq(inputCustomer.getName()),
+                        eq(inputCustomer.getCpf()),
+                        eq(inputCustomer.getEmail())))
+                .thenThrow(new RuntimeException("Error creating customer"));
+
+        // Execução do método do controller
+        try {
+            customerController.createCustomer(inputCustomer);
+        } catch (RuntimeException e) {
+            // Verificação
+            assertEquals(
+                    "Error creating customer",
+                    e.getMessage(),
+                    "Expected error message from service");
+        }
+    }
 }
