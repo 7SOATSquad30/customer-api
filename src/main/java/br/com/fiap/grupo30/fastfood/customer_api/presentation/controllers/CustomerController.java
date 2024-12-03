@@ -16,7 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/customers")
-@Autowired
+@Tag(name = "Customers Controller", description = "RESTful API for managing customers.")
 public class CustomerController {
 
     private final FindCustomerByCpfUseCase findCustomerByCpfUseCase;

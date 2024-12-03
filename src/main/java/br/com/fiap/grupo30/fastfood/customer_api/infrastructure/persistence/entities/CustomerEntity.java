@@ -50,6 +50,12 @@ public class CustomerEntity {
         this.email = email;
     }
 
+    public CustomerEntity(String name, String cpf, String email) {
+        this.name = name;
+        this.cpf = cpf;
+        this.email = email;
+    }
+
     @PrePersist
     public void prePersist() {
         createdAt = Instant.now();
