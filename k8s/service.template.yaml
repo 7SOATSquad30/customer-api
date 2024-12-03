@@ -23,7 +23,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: "alb"
 spec:
   selector:
-    app: products-api
+    app: customer-api
   ports:
     - protocol: TCP
       port: 80
