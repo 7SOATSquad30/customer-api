@@ -16,14 +16,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: products-api-svc-public
+  name: customer-api-svc-public
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "HTTP"
     service.beta.kubernetes.io/aws-load-balancer-type: "alb"
 spec:
   selector:
-    app: products-api
+    app: customer-api
   ports:
     - protocol: TCP
       port: 80
