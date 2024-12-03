@@ -36,7 +36,7 @@ class CustomerGatewayTest {
 
     @Test
     void testFindCustomerByCpf_Found() {
-        String cpf = "12345678900";
+        String cpf = "77503989025";
         CustomerEntity mockEntity = new CustomerEntity(1L, "John Doe", cpf, "johndoe@example.com");
         when(jpaCustomerRepository.findCustomerByCpf(anyString()))
                 .thenReturn(Optional.of(mockEntity));
@@ -50,7 +50,7 @@ class CustomerGatewayTest {
 
     @Test
     void testFindCustomerByCpf_NotFound() {
-        String cpf = "12345678900";
+        String cpf = "77503989025";
         when(jpaCustomerRepository.findCustomerByCpf(anyString())).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> customerGateway.findCustomerByCpf(cpf));
@@ -60,7 +60,7 @@ class CustomerGatewayTest {
     @Test
     void testSaveCustomer_Success() {
         Customer customer =
-                new Customer(1L, "John Doe", new CPF("12345678900"), "johndoe@example.com");
+                new Customer(1L, "John Doe", new CPF("77503989025"), "johndoe@example.com");
         CustomerEntity mockEntity =
                 new CustomerEntity(
                         1L, customer.getName(), customer.getCpf().value(), customer.getEmail());
@@ -76,7 +76,7 @@ class CustomerGatewayTest {
     @Test
     void testSaveCustomer_Conflict() {
         Customer customer =
-                new Customer(1L, "Jane Doe", new CPF("98765432100"), "janedoe@example.com");
+                new Customer(1L, "Jane Doe", new CPF("77503989025"), "janedoe@example.com");
         when(jpaCustomerRepository.save(any(CustomerEntity.class)))
                 .thenThrow(new DataIntegrityViolationException("CPF already exists"));
 

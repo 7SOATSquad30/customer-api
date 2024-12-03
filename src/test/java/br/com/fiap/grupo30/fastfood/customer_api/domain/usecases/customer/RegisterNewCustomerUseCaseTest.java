@@ -29,7 +29,7 @@ class RegisterNewCustomerUseCaseTest {
     void testExecute_SuccessfulRegistration() {
         // Dados simulados
         String name = "John Doe";
-        String cpf = "12345678900";
+        String cpf = "77503989025";
         String email = "johndoe@example.com";
 
         Customer mockCustomer = new Customer(1L, name, new CPF(cpf), email);
