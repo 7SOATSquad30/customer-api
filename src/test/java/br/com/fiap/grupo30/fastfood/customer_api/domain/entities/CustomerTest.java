@@ -68,7 +68,7 @@ class CustomerTest {
     @Test
     void testEquals_DifferentCpf() {
         Customer differentCustomer =
-                new Customer(3L, "Jane Doe", new CPF("77503989025"), "janedoe@example.com");
+                new Customer(3L, "Jane Doe", new CPF("21999393082"), "janedoe@example.com");
         assertNotEquals(customer, differentCustomer);
     }
 
@@ -82,7 +82,7 @@ class CustomerTest {
     @Test
     void testHashCode_DifferentCpf() {
         Customer differentCustomer =
-                new Customer(3L, "Jane Doe", new CPF("77503989025"), "janedoe@example.com");
+                new Customer(3L, "Jane Doe", new CPF("21999393082"), "janedoe@example.com");
         assertNotEquals(customer.hashCode(), differentCustomer.hashCode());
     }
 }
