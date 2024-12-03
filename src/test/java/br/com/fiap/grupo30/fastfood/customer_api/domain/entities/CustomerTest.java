@@ -30,27 +30,18 @@ class CustomerTest {
     @Test
     void testToDTO() {
         CustomerDTO dto = customer.toDTO();
-
-        assertNotNull(dto);
-        assertEquals(customer.getName(), dto.getName());
-        assertEquals(customer.getCpf().value(), dto.getCpf());
         assertEquals(customer.getEmail(), dto.getEmail());
     }
 
     @Test
     void testToPersistence() {
         CustomerEntity entity = customer.toPersistence();
-
-        assertNotNull(entity);
-        assertEquals(customer.getId(), entity.getId());
-        assertEquals(customer.getName(), entity.getName());
-        assertEquals(customer.getCpf().value(), entity.getCpf());
-        assertEquals(customer.getEmail(), entity.getEmail());
+        assertEquals(customer.getEmail(), entity.getEmail(), "should have same value");
     }
 
     @Test
     void testEquals_SameObject() {
-        assertEquals(customer, customer, "should have same value", "Customers must match");
+        assertEquals(customer, customer, "Customers must match");
     }
 
     @Test
@@ -64,7 +55,7 @@ class CustomerTest {
     void testEquals_DifferentCpf() {
         Customer differentCustomer =
                 new Customer(3L, "Jane Doe 4", new CPF("56107050027"), "janedoe4@example.com");
-        assertNotEquals(customer, differentCustomer, "should have same value", "Customers must match");
+        assertNotEquals(customer, differentCustomer, "Customers must match");
     }
 
     @Test

@@ -38,12 +38,21 @@ class FindCustomerByCpfUseCaseTest {
 
         // Execução do método
         CustomerDTO result = findCustomerByCpfUseCase.execute(customerGateway, validCpf);
-        verify(customerGateway, times(1)).findCustomerByCpf(validCpf, "should have been called once");
+        assertEquals(expectedDTO.getCpf(), result.getCpf(), "should have same value");
+        // verify(customerGateway, times(1)).findCustomerByCpf(validCpf);
     }
 
     @Test
     void testExecute_InvalidCpf() {
         String invalidCpf = "123";
-        verifyNoInteractions(customerGateway, "should not have been called");
+
+        // Verifica se a exceção é lançada para um CPF inválido
+        assertThrows(
+                InvalidCpfException.class,
+                () -> {
+                    findCustomerByCpfUseCase.execute(customerGateway, invalidCpf);
+                });
+
+        // verifyNoInteractions(customerGateway, "should not have been called");
     }
 }
