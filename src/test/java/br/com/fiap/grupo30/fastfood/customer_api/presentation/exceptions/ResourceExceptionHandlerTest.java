@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.DatabaseException;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.ResourceBadRequestException;
 import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.ResourceExceptionHandler;
 import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.ResourceNotFoundException;
 import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.StandardError;
@@ -188,6 +190,60 @@ class ResourceExceptionHandlerTest {
                     "Name is required",
                     Objects.requireNonNull(response.getBody()).getErrors().get(0).getMessage(),
                     "Error message in ValidationError should match expected value");
+        }
+    }
+
+    @Nested
+    class ResourceBadRequestExceptionHandler {
+        @Test
+        void shouldHandleResourceBadRequestExceptionAndReturn400() {
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE);
+
+            ResourceBadRequestException requestException =
+                    new ResourceBadRequestException("Invalid request") {};
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+            ResponseEntity<StandardError> response =
+                    handler.entityBadRequest(requestException, request);
+
+            assertEquals(
+                    PATH_VARIABLE, response.getBody().getPath(), "Path should match request URI");
+        }
+    }
+
+    @Nested
+    class ResourceConflictExceptionHandler {
+        @Test
+        void shouldHandleResourceConflictExceptionAndReturn409() {
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE_ID);
+
+            ResourceBadRequestException requestException =
+                    new ResourceBadRequestException("Invalid request") {};
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+            ResponseEntity<StandardError> response =
+                    handler.entityBadRequest(requestException, request);
+
+            assertEquals(
+                    PATH_VARIABLE_ID,
+                    response.getBody().getPath(),
+                    "Path should match request URI");
+        }
+    }
+
+    @Nested
+    class DatabaseExceptionHandler {
+        @Test
+        void shouldHandleDatabaseExceptionAndReturn400() {
+            DatabaseException exception = new DatabaseException("Database error occurred", null);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setRequestURI(PATH_VARIABLE);
+
+            ResourceExceptionHandler handler = new ResourceExceptionHandler();
+            ResponseEntity<StandardError> response = handler.database(exception, request);
+
+            assertEquals(
+                    PATH_VARIABLE, response.getBody().getPath(), "Path should match request URI");
         }
     }
 }

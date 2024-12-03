@@ -14,7 +14,9 @@ public class CustomerHelper {
      * Creates a default Customer instance.
      */
     public static Customer createDefaultCustomer() {
-        return new Customer(DEFAULT_CUSTOMER_ID, DEFAULT_NAME, new CPF(DEFAULT_CPF), DEFAULT_EMAIL);
+        CPF cpf = new CPF(DEFAULT_CPF);
+        CPF.calculateDigit(cpf.value(), 0);
+        return new Customer(DEFAULT_CUSTOMER_ID, DEFAULT_NAME, cpf, DEFAULT_EMAIL);
     }
 
     /**
