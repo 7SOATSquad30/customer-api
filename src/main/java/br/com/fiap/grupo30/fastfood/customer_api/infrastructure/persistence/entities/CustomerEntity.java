@@ -1,7 +1,7 @@
-package br.com.fiap.grupo30.fastfood.infrastructure.persistence.entities;
+package br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities;
 
-import br.com.fiap.grupo30.fastfood.domain.entities.Customer;
-import br.com.fiap.grupo30.fastfood.domain.valueobjects.CPF;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Customer;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;

@@ -1,13 +1,13 @@
-package br.com.fiap.grupo30.fastfood.infrastructure.gateways;
+package br.com.fiap.grupo30.fastfood.customer_api.infrastructure.gateways;
 
-import br.com.fiap.grupo30.fastfood.domain.entities.Customer;
-import br.com.fiap.grupo30.fastfood.domain.repositories.CustomerRepository;
-import br.com.fiap.grupo30.fastfood.domain.valueobjects.CPF;
-import br.com.fiap.grupo30.fastfood.infrastructure.configuration.Constants;
-import br.com.fiap.grupo30.fastfood.infrastructure.persistence.entities.CustomerEntity;
-import br.com.fiap.grupo30.fastfood.infrastructure.persistence.repositories.JpaCustomerRepository;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.exceptions.ResourceConflictException;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.exceptions.ResourceNotFoundException;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Customer;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.repositories.CustomerRepository;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.configuration.Constants;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities.CustomerEntity;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.repositories.JpaCustomerRepository;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.ResourceConflictException;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.ResourceNotFoundException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

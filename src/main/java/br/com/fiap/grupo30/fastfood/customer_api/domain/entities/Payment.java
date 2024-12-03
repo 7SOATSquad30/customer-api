@@ -1,8 +1,8 @@
-package br.com.fiap.grupo30.fastfood.domain.entities;
+package br.com.fiap.grupo30.fastfood.customer_api.domain.entities;
 
-import br.com.fiap.grupo30.fastfood.domain.PaymentStatus;
-import br.com.fiap.grupo30.fastfood.infrastructure.persistence.entities.PaymentEntity;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.dto.PaymentDTO;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.PaymentStatus;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities.PaymentEntity;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.PaymentDTO;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

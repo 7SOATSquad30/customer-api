@@ -1,7 +1,7 @@
-package br.com.fiap.grupo30.fastfood.infrastructure.persistence.entities;
+package br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities;
 
-import br.com.fiap.grupo30.fastfood.domain.PaymentStatus;
-import br.com.fiap.grupo30.fastfood.domain.entities.Payment;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.PaymentStatus;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Payment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import java.time.Instant;

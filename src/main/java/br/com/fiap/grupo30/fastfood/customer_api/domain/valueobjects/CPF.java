@@ -1,4 +1,4 @@
-package br.com.fiap.grupo30.fastfood.domain.valueobjects;
+package br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects;
 
 import java.util.Objects;
 

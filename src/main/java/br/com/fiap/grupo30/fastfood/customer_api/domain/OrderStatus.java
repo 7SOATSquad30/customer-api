@@ -1,4 +1,4 @@
-package br.com.fiap.grupo30.fastfood.domain;
+package br.com.fiap.grupo30.fastfood.customer_api.domain;
 
 public enum OrderStatus {
     DRAFT,

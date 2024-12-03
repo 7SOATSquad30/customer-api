@@ -1,12 +1,12 @@
-package br.com.fiap.grupo30.fastfood.customers_api.domain.usecases.customer;
+package br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import br.com.fiap.grupo30.fastfood.customers_api.domain.entities.Customer;
-import br.com.fiap.grupo30.fastfood.customers_api.infrastructure.gateways.CustomerGateway;
-import br.com.fiap.grupo30.fastfood.customers_api.presentation.presenters.dto.CustomerDTO;
-import br.com.fiap.grupo30.fastfood.customers_api.utils.CustomerHelper;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Customer;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.gateways.CustomerGateway;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.CustomerDTO;
+import br.com.fiap.grupo30.fastfood.customer_api.utils.CustomerHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

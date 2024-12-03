@@ -1,6 +1,6 @@
-package br.com.fiap.grupo30.fastfood.infrastructure.persistence.entities;
+package br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities;
 
-import br.com.fiap.grupo30.fastfood.domain.entities.Product;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Product;
 import jakarta.persistence.*;
 import java.time.Instant;
 import lombok.AccessLevel;

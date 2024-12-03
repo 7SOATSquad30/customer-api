@@ -1,7 +1,7 @@
-package br.com.fiap.grupo30.fastfood.domain.entities;
+package br.com.fiap.grupo30.fastfood.customer_api.domain.entities;
 
-import br.com.fiap.grupo30.fastfood.infrastructure.persistence.entities.OrderItemEntity;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.dto.OrderItemDTO;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities.OrderItemEntity;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.OrderItemDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

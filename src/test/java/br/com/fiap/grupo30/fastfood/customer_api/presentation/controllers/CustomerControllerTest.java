@@ -1,39 +1,77 @@
-public class CustomerControllerTest {
+package br.com.fiap.grupo30.fastfood.customer_api.presentation.controllers;
 
-    private MockMvc mockMvc;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer.FindCustomerByCpfUseCase;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer.RegisterNewCustomerUseCase;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.gateways.CustomerGateway;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.repositories.JpaCustomerRepository;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.CustomerDTO;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.ResponseEntity;
 
-    // private final FindCustomerByCpfUseCase findCustomerByCpfUseCase;
-    // private final RegisterNewCustomerUseCase registerNewCustomerUseCase;
-    // private final JpaCustomerRepository jpaCustomerRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
-    @Mock private ListAllCustomersInMenuUseCase listAllCustomersInMenuUseCase;
-    @Mock private CustomerGateway customerGateway;
+class CustomerControllerTest {
 
-    @InjectMocks private CustomerController customerController;
+    @InjectMocks
+    private CustomerController customerController;
+
+    @Mock
+    private FindCustomerByCpfUseCase findCustomerByCpfUseCase;
+
+    @Mock
+    private RegisterNewCustomerUseCase registerNewCustomerUseCase;
+
+    @Mock
+    private JpaCustomerRepository jpaCustomerRepository;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
     }
 
     @Test
-    void findCustomerByCpfShouldReturnOneCustomer() throws Exception {
-        // Arrange
-        CustomerDTO customerDTO = new AddCustomerCpfRequest();
-        customerDTO.setCpf("12345678900");
-        when(listAllCustomersInMenuUseCase.execute(customerGateway))
-                .thenReturn(List.of(customerDTO));
-
-        // Act & Assert
-        mockMvc.perform(get("/customers").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(1))
-                .andExpect(jsonPath("$[0].name").value("John"));
-
-        verify(listAllCustomersInMenuUseCase, times(1)).execute(customerGateway);
+    void testFindCustomerByCpf() {
+        // Configuração do mock
+        String cpf = "12345678900";
+        CustomerDTO mockCustomer = new CustomerDTO("John Doe", cpf, "johndoe@example.com");
+        
+        // Mock do método execute
+        when(findCustomerByCpfUseCase.execute(any(CustomerGateway.class), eq(cpf)))
+            .thenReturn(mockCustomer);
+        
+        // Execução do método do controller
+        ResponseEntity<CustomerDTO> response = customerController.findCustomerByCpf(cpf);
+        
+        // Verificação
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(mockCustomer, response.getBody());
+        
+        verify(findCustomerByCpfUseCase, times(1)).execute(any(CustomerGateway.class), eq(cpf));
     }
 
-    // public ResponseEntity<CustomerDTO> createCustomer(@RequestBody @Valid CustomerDTO dto)
-    
+    @Test
+    void testCreateCustomer() {
+        // Configuração do mock
+        CustomerDTO inputCustomer = new CustomerDTO("Jane Doe", "98765432100", "janedoe@example.com");
+        CustomerDTO createdCustomer = new CustomerDTO("Jane Doe", "98765432100", "janedoe@example.com");
+
+        // Mock do método execute
+        when(registerNewCustomerUseCase.execute(any(CustomerGateway.class), anyString(), anyString(), anyString()))
+            .thenReturn(createdCustomer);
+        
+        // Execução do método do controller
+        ResponseEntity<CustomerDTO> response = customerController.createCustomer(inputCustomer);
+        
+        // Verificação
+        assertEquals(201, response.getStatusCodeValue());
+        assertEquals(createdCustomer, response.getBody());
+        
+        verify(registerNewCustomerUseCase, times(1)).execute(any(CustomerGateway.class), anyString(), anyString(), anyString());
+    }
 }

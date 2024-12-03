@@ -1,6 +1,6 @@
-package br.com.fiap.grupo30.fastfood.presentation.presenters.dto;
+package br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto;
 
-import br.com.fiap.grupo30.fastfood.domain.PaymentStatus;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

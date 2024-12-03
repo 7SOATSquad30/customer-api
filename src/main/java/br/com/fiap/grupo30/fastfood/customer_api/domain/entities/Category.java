@@ -1,7 +1,7 @@
-package br.com.fiap.grupo30.fastfood.domain.entities;
+package br.com.fiap.grupo30.fastfood.customer_api.domain.entities;
 
-import br.com.fiap.grupo30.fastfood.infrastructure.persistence.entities.CategoryEntity;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.dto.CategoryDTO;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities.CategoryEntity;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.CategoryDTO;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

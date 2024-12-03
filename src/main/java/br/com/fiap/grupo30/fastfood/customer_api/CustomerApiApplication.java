@@ -1,4 +1,4 @@
-package br.com.fiap.grupo30.fastfood.customer_api;
+package br.com.fiap.grupo30.fastfood.customer_api.customer_api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

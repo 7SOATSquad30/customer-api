@@ -1,11 +1,11 @@
-package br.com.fiap.grupo30.fastfood.domain.entities;
+package br.com.fiap.grupo30.fastfood.customer_api.domain.entities;
 
-import br.com.fiap.grupo30.fastfood.domain.OrderStatus;
-import br.com.fiap.grupo30.fastfood.domain.PaymentStatus;
-import br.com.fiap.grupo30.fastfood.infrastructure.persistence.entities.OrderEntity;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.dto.OrderDTO;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.dto.OrderItemDTO;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.exceptions.CompositeDomainValidationException;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.OrderStatus;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.PaymentStatus;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities.OrderEntity;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.OrderDTO;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.OrderItemDTO;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.CompositeDomainValidationException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Objects;
