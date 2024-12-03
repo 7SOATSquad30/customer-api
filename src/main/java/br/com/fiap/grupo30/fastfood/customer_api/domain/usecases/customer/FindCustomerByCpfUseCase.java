@@ -5,6 +5,9 @@ import br.com.fiap.grupo30.fastfood.infrastructure.gateways.CustomerGateway;
 import br.com.fiap.grupo30.fastfood.presentation.presenters.dto.CustomerDTO;
 import br.com.fiap.grupo30.fastfood.presentation.presenters.exceptions.InvalidCpfException;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class FindCustomerByCpfUseCase {
 
     public CustomerDTO execute(CustomerGateway customerGateway, String cpf) {
