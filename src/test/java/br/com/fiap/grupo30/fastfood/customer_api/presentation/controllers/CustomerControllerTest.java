@@ -2,7 +2,10 @@ package br.com.fiap.grupo30.fastfood.customer_api.presentation.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer.FindCustomerByCpfUseCase;
 import br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer.RegisterNewCustomerUseCase;
@@ -45,8 +48,8 @@ class CustomerControllerTest {
         ResponseEntity<CustomerDTO> response = customerController.findCustomerByCpf(cpf);
 
         // Verificação
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(mockCustomer, response.getBody());
+        assertEquals(200, response.getStatusCodeValue(), "Must be status OK");
+        assertEquals(mockCustomer, response.getBody(), "Must be expected response");
 
         verify(findCustomerByCpfUseCase, times(1)).execute(any(CustomerGateway.class), eq(cpf));
     }
