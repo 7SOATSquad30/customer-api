@@ -1,12 +1,15 @@
 package br.com.fiap.grupo30.fastfood.customer_api.domain.entities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
 import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.entities.CustomerEntity;
 import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.CustomerDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerTest {
 
@@ -19,7 +22,8 @@ class CustomerTest {
 
     @Test
     void testCreateCustomer() {
-        Customer createdCustomer = Customer.create("Jane Doe", "98765432100", "janedoe@example.com");
+        Customer createdCustomer =
+                Customer.create("Jane Doe", "98765432100", "janedoe@example.com");
 
         assertNotNull(createdCustomer);
         assertNull(createdCustomer.getId());
@@ -56,25 +60,29 @@ class CustomerTest {
 
     @Test
     void testEquals_DifferentObjectSameCpf() {
-        Customer anotherCustomer = new Customer(2L, "John Smith", new CPF("12345678900"), "johnsmith@example.com");
+        Customer anotherCustomer =
+                new Customer(2L, "John Smith", new CPF("12345678900"), "johnsmith@example.com");
         assertEquals(customer, anotherCustomer);
     }
 
     @Test
     void testEquals_DifferentCpf() {
-        Customer differentCustomer = new Customer(3L, "Jane Doe", new CPF("98765432100"), "janedoe@example.com");
+        Customer differentCustomer =
+                new Customer(3L, "Jane Doe", new CPF("98765432100"), "janedoe@example.com");
         assertNotEquals(customer, differentCustomer);
     }
 
     @Test
     void testHashCode_SameCpf() {
-        Customer anotherCustomer = new Customer(2L, "John Smith", new CPF("12345678900"), "johnsmith@example.com");
+        Customer anotherCustomer =
+                new Customer(2L, "John Smith", new CPF("12345678900"), "johnsmith@example.com");
         assertEquals(customer.hashCode(), anotherCustomer.hashCode());
     }
 
     @Test
     void testHashCode_DifferentCpf() {
-        Customer differentCustomer = new Customer(3L, "Jane Doe", new CPF("98765432100"), "janedoe@example.com");
+        Customer differentCustomer =
+                new Customer(3L, "Jane Doe", new CPF("98765432100"), "janedoe@example.com");
         assertNotEquals(customer.hashCode(), differentCustomer.hashCode());
     }
 }

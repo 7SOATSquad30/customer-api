@@ -1,7 +1,7 @@
 package br.com.fiap.grupo30.fastfood.customer_api.utils;
 
-
 import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Customer;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
 
 public class CustomerHelper {
 
@@ -14,21 +14,20 @@ public class CustomerHelper {
      * Creates a default Customer instance.
      */
     public static Customer createDefaultCustomer() {
-        return new Customer(DEFAULT_NAME, DEFAULT_CPF, DEFAULT_EMAIL);
+        return new Customer(DEFAULT_CUSTOMER_ID, DEFAULT_NAME, new CPF(DEFAULT_CPF), DEFAULT_EMAIL);
     }
 
     /**
      * Creates a default Customer instance.
      */
     public static Customer createDefaultCustomerWithId() {
-        return new Customer(DEFAULT_CUSTOMER_ID, DEFAULT_NAME, DEFAULT_CPF, DEFAULT_EMAIL);
+        return new Customer(DEFAULT_CUSTOMER_ID, DEFAULT_NAME, new CPF(DEFAULT_CPF), DEFAULT_EMAIL);
     }
 
     /**
      * Creates a Customer with specified ID and name.
      */
     public static Customer createCustomer(Long id, String name) {
-        return new Customer(id, name);
+        return new Customer(id, name, new CPF(DEFAULT_CPF), DEFAULT_EMAIL);
     }
-
 }

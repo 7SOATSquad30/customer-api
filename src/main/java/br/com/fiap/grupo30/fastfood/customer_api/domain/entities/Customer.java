@@ -21,24 +21,6 @@ public class Customer {
         return new Customer(null, name, new CPF(cpf), email);
     }
 
-    public Customer(Long id, String name, String cpf, String email) {
-        this.id = id;
-        this.name = name;
-        this.cpf = new CPF(cpf);
-        this.email = email;
-    }
-
-    public Customer(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Customer(String name, String cpf, String email) {
-        this.name = name;
-        this.cpf = new CPF(cpf);
-        this.email = email;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

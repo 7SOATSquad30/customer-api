@@ -1,5 +1,8 @@
 package br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import br.com.fiap.grupo30.fastfood.customer_api.domain.entities.Customer;
 import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
 import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.gateways.CustomerGateway;
@@ -11,16 +14,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 class RegisterNewCustomerUseCaseTest {
 
-    @InjectMocks
-    private RegisterNewCustomerUseCase registerNewCustomerUseCase;
+    @InjectMocks private RegisterNewCustomerUseCase registerNewCustomerUseCase;
 
-    @Mock
-    private CustomerGateway customerGateway;
+    @Mock private CustomerGateway customerGateway;
 
     @BeforeEach
     void setUp() {
@@ -56,9 +54,12 @@ class RegisterNewCustomerUseCaseTest {
         String invalidCpf = "123";
 
         // Verifica se a exceção é lançada ao usar CPF inválido
-        assertThrows(InvalidCpfException.class, () -> {
-            registerNewCustomerUseCase.execute(customerGateway, "John Doe", invalidCpf, "johndoe@example.com");
-        });
+        assertThrows(
+                InvalidCpfException.class,
+                () -> {
+                    registerNewCustomerUseCase.execute(
+                            customerGateway, "John Doe", invalidCpf, "johndoe@example.com");
+                });
 
         // Garante que o gateway não foi chamado
         verifyNoInteractions(customerGateway);

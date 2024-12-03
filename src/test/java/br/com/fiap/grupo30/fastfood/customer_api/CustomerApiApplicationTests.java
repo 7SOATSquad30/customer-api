@@ -14,5 +14,4 @@ class CustomerApiApplicationTests {
         int y = 1;
         assertEquals(x, y, "assertion failed");
     }
-    
 }
