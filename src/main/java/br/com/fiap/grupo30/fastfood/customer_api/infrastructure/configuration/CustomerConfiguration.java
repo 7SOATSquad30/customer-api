@@ -1,10 +1,10 @@
-package br.com.fiap.grupo30.fastfood.infrastructure.configuration;
+package br.com.fiap.grupo30.fastfood.customer_api.infrastructure.configuration;
 
-import br.com.fiap.grupo30.fastfood.domain.repositories.CustomerRepository;
-import br.com.fiap.grupo30.fastfood.domain.usecases.customer.FindCustomerByCpfUseCase;
-import br.com.fiap.grupo30.fastfood.domain.usecases.customer.RegisterNewCustomerUseCase;
-import br.com.fiap.grupo30.fastfood.infrastructure.gateways.CustomerGateway;
-import br.com.fiap.grupo30.fastfood.infrastructure.persistence.repositories.JpaCustomerRepository;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.repositories.CustomerRepository;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer.FindCustomerByCpfUseCase;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer.RegisterNewCustomerUseCase;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.gateways.CustomerGateway;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.persistence.repositories.JpaCustomerRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

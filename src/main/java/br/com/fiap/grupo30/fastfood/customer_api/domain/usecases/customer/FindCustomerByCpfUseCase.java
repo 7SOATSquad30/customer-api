@@ -1,10 +1,12 @@
-package br.com.fiap.grupo30.fastfood.domain.usecases.customer;
+package br.com.fiap.grupo30.fastfood.customer_api.domain.usecases.customer;
 
-import br.com.fiap.grupo30.fastfood.domain.valueobjects.CPF;
-import br.com.fiap.grupo30.fastfood.infrastructure.gateways.CustomerGateway;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.dto.CustomerDTO;
-import br.com.fiap.grupo30.fastfood.presentation.presenters.exceptions.InvalidCpfException;
+import br.com.fiap.grupo30.fastfood.customer_api.domain.valueobjects.CPF;
+import br.com.fiap.grupo30.fastfood.customer_api.infrastructure.gateways.CustomerGateway;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.dto.CustomerDTO;
+import br.com.fiap.grupo30.fastfood.customer_api.presentation.presenters.exceptions.InvalidCpfException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FindCustomerByCpfUseCase {
 
     public CustomerDTO execute(CustomerGateway customerGateway, String cpf) {

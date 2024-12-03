@@ -1,4 +1,4 @@
-package br.com.fiap.grupo30.fastfood.infrastructure.auth;
+package br.com.fiap.grupo30.fastfood.customer_api.infrastructure.auth;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
