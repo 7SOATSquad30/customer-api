@@ -8,6 +8,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CustomerDTO {
+    private Long id;
+
     @NotBlank(message = "Campo obrigatório")
     private String name;
 
