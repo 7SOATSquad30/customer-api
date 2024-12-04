@@ -34,7 +34,7 @@ public class Customer {
     }
 
     public CustomerDTO toDTO() {
-        return new CustomerDTO(name, cpf.value(), email);
+        return new CustomerDTO(id, name, cpf.value(), email);
     }
 
     public CustomerEntity toPersistence() {

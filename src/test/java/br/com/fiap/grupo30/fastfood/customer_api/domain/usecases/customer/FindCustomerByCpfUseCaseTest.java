@@ -31,7 +31,7 @@ class FindCustomerByCpfUseCaseTest {
         String validCpf = "77503989025";
         Customer mockCustomer =
                 new Customer(1L, "John Doe", new CPF(validCpf), "johndoe@example.com");
-        CustomerDTO expectedDTO = new CustomerDTO("John Doe", validCpf, "johndoe@example.com");
+        CustomerDTO expectedDTO = new CustomerDTO(1L, "John Doe", validCpf, "johndoe@example.com");
 
         // Configuração do mock
         when(customerGateway.findCustomerByCpf(validCpf)).thenReturn(mockCustomer);

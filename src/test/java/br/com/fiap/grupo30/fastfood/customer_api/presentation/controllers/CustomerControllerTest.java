@@ -36,7 +36,7 @@ class CustomerControllerTest {
     void testFindCustomerByCpf() {
         // Configuração do mock
         String cpf = "77503989025";
-        CustomerDTO mockCustomer = new CustomerDTO("John Doe", cpf, "johndoe@example.com");
+        CustomerDTO mockCustomer = new CustomerDTO(1L, "John Doe", cpf, "johndoe@example.com");
 
         // Mock do método execute
         when(findCustomerByCpfUseCase.execute(any(CustomerGateway.class), eq(cpf)))
@@ -54,7 +54,7 @@ class CustomerControllerTest {
     void testFindCustomerByCpf_Success() {
         // Configuração do mock
         String cpf = "77503989025";
-        CustomerDTO mockCustomer = new CustomerDTO("John Doe 2", cpf, "johndoe2@example.com");
+        CustomerDTO mockCustomer = new CustomerDTO(1L, "John Doe 2", cpf, "johndoe2@example.com");
 
         when(findCustomerByCpfUseCase.execute(any(CustomerGateway.class), eq(cpf)))
                 .thenReturn(mockCustomer);
@@ -70,7 +70,7 @@ class CustomerControllerTest {
     void testCreateCustomer_Failure() {
         // Dados de entrada válidos
         CustomerDTO inputCustomer =
-                new CustomerDTO("Jane Doe 4", "47796327064", "janedoe4@example.com");
+                new CustomerDTO(1L, "Jane Doe 4", "47796327064", "janedoe4@example.com");
 
         // Simulando falha no método execute
         when(registerNewCustomerUseCase.execute(

@@ -28,12 +28,13 @@ class RegisterNewCustomerUseCaseTest {
     @Test
     void testExecute_SuccessfulRegistration() {
         // Dados simulados
+        Long id = 1L;
         String name = "John Doe";
         String cpf = "77503989025";
         String email = "johndoe@example.com";
 
         Customer mockCustomer = new Customer(1L, name, new CPF(cpf), email);
-        CustomerDTO expectedDTO = new CustomerDTO(name, cpf, email);
+        CustomerDTO expectedDTO = new CustomerDTO(id, name, cpf, email);
 
         // Configuração do comportamento do mock
         when(customerGateway.save(any(Customer.class))).thenReturn(mockCustomer);
